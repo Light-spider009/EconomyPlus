@@ -1,0 +1,51 @@
+# EconomyPlus Configuration
+
+economy:
+  currency-name: "Dollar"
+  currency-symbol: "$"
+  starting-balance: 500.0
+  max-balance: 1000000000.0
+
+bank:
+  base-deposit-interest-rate: 0.02   # 2% per cycle
+  base-loan-interest-rate: 0.05      # 5% per cycle
+  interest-cycle-hours: 24
+  max-loan-multiplier: 5.0           # Max loan = 5x balance
+  max-deposit: 10000000.0
+  loan-penalty-percent: 0.10         # 10% penalty for late repayment
+
+inflation:
+  enabled: true
+  target-gdp: 1000000.0
+  check-interval-minutes: 60
+  max-inflation-rate: 0.15           # 15% max
+  min-inflation-rate: -0.05          # -5% deflation min
+  gdp-per-player-target: 5000.0
+
+loan:
+  repayment-days: 7
+  penalty-enabled: true
+  max-active-loans: 3
+
+currency:
+  paper-currency-enabled: true
+  denominations:
+    - 1
+    - 5
+    - 10
+    - 50
+    - 100
+    - 500
+    - 1000
+
+scoreboard:
+  enabled: true
+  update-interval-seconds: 5
+  show-balance: true
+  show-inflation: true
+  show-loan: true
+
+messages:
+  prefix: "&6[&eEconomy&6+&6] &r"
+  no-permission: "&cYou don't have permission!"
+  player-not-found: "&cPlayer not found!"

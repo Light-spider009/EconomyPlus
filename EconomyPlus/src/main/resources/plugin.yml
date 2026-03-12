@@ -1,0 +1,57 @@
+name: EconomyPlus
+version: 1.0.0
+main: com.economyplus.EconomyPlus
+api-version: 1.20
+description: Advanced Economy Plugin with Bank, Loans, Paper Currency, and GDP system
+author: EconomyPlus
+
+commands:
+  bank:
+    description: Opens the bank GUI
+    usage: /bank
+  balance:
+    description: Check your balance
+    usage: /balance [player]
+    aliases: [bal, money]
+  pay:
+    description: Pay another player
+    usage: /pay <player> <amount>
+  loan:
+    description: Manage loans
+    usage: /loan <take|repay|info> [amount]
+  trade:
+    description: Open a trade GUI with another player
+    usage: /trade <player>
+  currency:
+    description: Manage physical currency
+    usage: /currency <give|withdraw> <amount>
+  gdp:
+    description: View server GDP and inflation stats
+    usage: /gdp
+  ecoAdmin:
+    description: Admin economy commands
+    usage: /ecoadmin <give|take|set|reset> <player> <amount>
+    aliases: [ecoadmin]
+
+permissions:
+  economyplus.bank:
+    description: Access the bank
+    default: true
+  economyplus.pay:
+    description: Pay other players
+    default: true
+  economyplus.loan:
+    description: Take and repay loans
+    default: true
+  economyplus.trade:
+    description: Trade with other players
+    default: true
+  economyplus.currency:
+    description: Use physical currency
+    default: true
+  economyplus.gdp:
+    description: View GDP stats
+    default: true
+  economyplus.admin:
+    description: Admin economy commands
+    default: op
