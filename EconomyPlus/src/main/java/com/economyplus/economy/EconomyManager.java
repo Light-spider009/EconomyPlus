@@ -1,6 +1,7 @@
 package com.economyplus.economy;
 
 import com.economyplus.EconomyPlus;
+import com.economyplus.bank.BankManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -21,7 +22,7 @@ public class EconomyManager {
 
     // GDP & Inflation
     private double serverGDP = 0;
-    private double currentInflationRate = 0.02; // 2% default
+    private double currentInflationRate = 0.02;
     private double totalMoneySupply = 0;
 
     public EconomyManager(EconomyPlus plugin) {
@@ -88,26 +89,25 @@ public class EconomyManager {
         return true;
     }
 
-public void recalculateGDP() {
-    totalMoneySupply = balances.values().stream().mapToDouble(Double::doubleValue).sum();
-    BankManager bankManager = plugin.getBankManager();
-    double totalDeposits = (bankManager != null) ? bankManager.getTotalDeposits() : 0;
-    serverGDP = totalMoneySupply + totalDeposits;
-    adjustInflation();
-}
+    public void recalculateGDP() {
+        totalMoneySupply = balances.values().stream().mapToDouble(Double::doubleValue).sum();
+        BankManager bankManager = plugin.getBankManager();
+        double totalDeposits = (bankManager != null) ? bankManager.getTotalDeposits() : 0;
+        serverGDP = totalMoneySupply + totalDeposits;
+        adjustInflation();
+    }
+
     private void adjustInflation() {
         if (!plugin.getConfigManager().isInflationEnabled()) return;
         int onlinePlayers = Math.max(1, plugin.getServer().getOnlinePlayers().size());
         double targetGDP = plugin.getConfigManager().getGdpPerPlayerTarget() * onlinePlayers;
         double gdpRatio = serverGDP / targetGDP;
 
-        // If GDP is too high → inflation rises; too low → deflation/lower rates
         if (gdpRatio > 1.5) {
             currentInflationRate = Math.min(plugin.getConfigManager().getMaxInflationRate(), currentInflationRate + 0.005);
         } else if (gdpRatio < 0.5) {
             currentInflationRate = Math.max(plugin.getConfigManager().getMinInflationRate(), currentInflationRate - 0.005);
         } else {
-            // Slowly normalize toward 2%
             if (currentInflationRate > 0.02) currentInflationRate -= 0.001;
             else if (currentInflationRate < 0.02) currentInflationRate += 0.001;
         }
