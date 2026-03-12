@@ -88,13 +88,13 @@ public class EconomyManager {
         return true;
     }
 
-    public void recalculateGDP() {
-        totalMoneySupply = balances.values().stream().mapToDouble(Double::doubleValue).sum();
-        // GDP = total money supply + bank deposits (simplified)
-        serverGDP = totalMoneySupply + plugin.getBankManager().getTotalDeposits();
-        adjustInflation();
-    }
-
+public void recalculateGDP() {
+    totalMoneySupply = balances.values().stream().mapToDouble(Double::doubleValue).sum();
+    BankManager bankManager = plugin.getBankManager();
+    double totalDeposits = (bankManager != null) ? bankManager.getTotalDeposits() : 0;
+    serverGDP = totalMoneySupply + totalDeposits;
+    adjustInflation();
+}
     private void adjustInflation() {
         if (!plugin.getConfigManager().isInflationEnabled()) return;
         int onlinePlayers = Math.max(1, plugin.getServer().getOnlinePlayers().size());
