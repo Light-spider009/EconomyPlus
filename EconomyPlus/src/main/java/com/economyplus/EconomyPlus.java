@@ -31,8 +31,8 @@ public class EconomyPlus extends JavaPlugin {
 
         // Initialize managers
         configManager = new ConfigManager(this);
-        economyManager = new EconomyManager(this);
         bankManager = new BankManager(this);
+        economyManager = new EconomyManager(this);
         loanManager = new LoanManager(this);
         currencyManager = new CurrencyManager(this);
         scoreboardManager = new ScoreboardManager(this);
